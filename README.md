@@ -42,8 +42,6 @@ So here we are.  An infinitely long hallway, lined with columns of
 filing cabinets.  Just pick a folder at random, claim it as your own,
 and go from there.
 
-![(image of an infinitely long hallway of doors, marked by GUID)](img/guildhallway.png)
-
 
 ### Scenic Introduction
 
