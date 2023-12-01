@@ -1,0 +1,18 @@
+{
+  "ID": {
+    "GUID": "c37e001d-6e7d-49c8-bb5d-93c4052cb006",
+    "TAGURI": "lionkimbro@gmail.com,2023-11-30:project:foldervault",
+    "NAME": "foldervault"
+  },
+  "INFO": {
+    "TITLE": "Folder Vault",
+    "DESC": "a near infinite vault of folders, identified by UUID",
+    "TAGS": ["folder", "folders", "vault", "foldervault"]
+  },
+  "TIMESTAMPS": {
+    "START_TEXT": "2023-11-30",
+    "START": 1701354971,
+    "CREATED": 1701354971
+  }
+}
+
