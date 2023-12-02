@@ -22,6 +22,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+---------------------------------------------------------------------
+SETUP:
+
+  Recommended setup procedures:
+
+    import lockfolder.lockfolder as lockfolder
+    import foldervault.foldervault as vault
+   
+    lockfolder.setup()  # necessary for lock/unlock functionality
+    vault.setup()
+    vault.reset()
+    vault.configure_globalmapfile()  # ~/.foldervault/diskmap.json
+
+  The diskmap.json file should read (at a minimum) something like:
+
+    {"DEFAULT": "F:\\foldervault"}
 
 ---------------------------------------------------------------------
 Terminology:
@@ -36,13 +52,12 @@ Terminology:
                    drives might be network mapped (NETWORK), some
                    drives might be fast (FAST), -- and you might want
                    a given created folder to have one of these
-                   particular attributes.
+                   particular attributes; at a minimum there must be a
+                   DEFAULT folder root
  
   "vault folder" -- a folder (or directory) on the filesystem, kept
                     within a Root; all vault folders are identified,
-                    uniquely by a randomly chosen v4 UUID.
-
-
+                    uniquely by a randomly chosen v4 UUID
 ---------------------------------------------------------------------
 Functions Reference:
 
@@ -64,6 +79,12 @@ configure(map_dictionary) -- establish the root directories,
   mandatory key: DEFAULT
 
   values: pathlib.Path instances, pointing to root directories
+
+configure_globalmapfile() -- call configure via a standardized scheme
+                             for locating a map file
+
+      %FOLDERVAULTDISKMAP%/diskmap.json
+  or: ~/.foldervault/diskmap.json
 
 locate() -- locate the vault folder identified by g[UUID], and place
             path to it into g[PATH]
@@ -163,6 +184,26 @@ def configure(map_dictionary):
     assert DEFAULT in map_dictionary, "required: a DEFAULT mapping"
     mapping.clear()
     mapping.update(map_dictionary)
+
+
+def configure_globalmapfile():
+    """Supply the map dictionary from a global map file.
+    
+    If the environment variable FOLDERVAULTDISKMAP is found,
+    the global map file is found at:
+
+      %FOLDERVAULTDIR%/diskmap.json
+
+    Otherwise, it is located at:
+    
+      ~/.foldervault/diskmap.json
+    
+    The JSON-formatted map file is fed directly into
+    configure(map_dictionary).
+    """
+    map_D = util.read_json(pathfor(MAP))
+    util.values_to_paths(map_D)
+    configure(map_D)
 
 
 def locate():

@@ -1,4 +1,4 @@
-"""foldervault.paths  -- paths to resources
+"""foldervault.paths
 
 MIT License
 
@@ -22,17 +22,46 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+
+import os
 import pathlib
 
 from .words import *
-from . import foldervault
 
+
+kFOLDERVAULTDIR_ENVIRONMENTVAR = "FOLDERVAULTDIR"
+kFOLDERVAULTDIR_DEFAULT = ".foldervault"
 
 def pathfor(sym):
+    from . import foldervault
+    
+    if sym == FOLDERVAULTDIR: # config directory
+        # 1. check for environment var
+        #
+        env_path = os.environ.get(kFOLDERVAULTDIR_ENVIRONMENTVAR)
+        
+        if env_path:
+            # If environment variable set, return Path based on
+            # environment var.
+            #
+            return pathlib.Path(env_path)
+        else:
+            # If environment variable NOT set, return Path based on
+            # home directory.
+            #
+            # "~/.foldervault"
+            #
+            return pathlib.Path.home() / kFOLDERVAULTDIR_DEFAULT
+    
+    elif sym == MAP:
+        return pathfor(FOLDERVAULTDIR) / "diskmap.json"
+    
     if sym == LOCKS:
         return foldervault.g[PATH] / "locks"
+    
     elif sym == DATA:
         return foldervault.g[PATH] / "data"
+    
     else:
         raise ValueError(sym)
 

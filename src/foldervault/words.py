@@ -1,4 +1,4 @@
-"""foldervault.words  -- symbols used throughout system
+"""foldervault.words
 
 MIT License
 
@@ -43,3 +43,5 @@ NETWORK = "NETWORK"
 DEFAULT = "DEFAULT"
 
 LOCKS = "LOCKS"
+FOLDERVAULTDIR = "FOLDERVAULTDIR"
+MAP = "MAP"

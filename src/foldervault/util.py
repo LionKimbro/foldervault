@@ -1,4 +1,4 @@
-"""foldervault.util  -- utility functions
+"""foldervault.util
 
 MIT License
 
@@ -23,10 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 import time
 import shutil
 import json
+import pathlib
 
 
 def timestamp():
@@ -43,3 +43,7 @@ def mkdir(p):
 
 def nuke_folder(p):
     shutil.rmtree(p)
+
+def values_to_paths(D):
+    for k,v in D.items():
+        D[k] = pathlib.Path(v)
